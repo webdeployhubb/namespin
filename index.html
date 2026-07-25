@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Wheel of Names - HD Version</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 id="secretTitle">Wheel of Names</h1>
+    <p>Putar roda keberuntungan Anda dengan gaya HD!</p>
+
+    <div class="container">
+        <div class="wheel-container">
+            <div class="pointer"></div>
+            <canvas id="wheel" width="600" height="600"></canvas>
+        </div>
+
+        <div class="controls">
+            <label for="namesInput">Masukkan Nama (1 per baris):</label>
+            <textarea id="namesInput" oninput="updateNames()">Andi
+Budi
+Citra
+Dewi
+Eko</textarea>
+            
+            <button class="glass-btn" onclick="spinWheel()">
+                <span style="font-size: 18px; font-weight: bold; display: block;">PUTAR RODA</span>
+                <span style="font-size: 11px; opacity: 0.7; display: block; margin-top: 2px;">Klik untuk mengundi nama</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="winner-display"></div>
+
+    <div class="history-container">
+        <h3>Riwayat Pemenang</h3>
+        <ul id="history-list">
+            <li style="color: #94a3b8; list-style: none; text-align: center;">Belum ada pemenang</li>
+        </ul>
+    </div>
+
+    <!-- MODAL POPUP CARD PEMENANG -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content winner-modal-content">
+            <h2>🎉 SELAMAT! 🎉</h2>
+            <p style="margin: 0; color: #cbd5e1;">Pemenang terpilih:</p>
+            <div class="winner-name-highlight" id="popupWinnerName">-</div>
+            <button class="glass-btn" onclick="closeWinnerModal()" style="margin-top: 10px;">OK / LANJUTKAN</button>
+        </div>
+    </div>
+
+    <!-- MODAL PANEL RAHASIA (RIGGED) -->
+    <div id="rigModal" class="modal">
+        <div class="modal-content">
+            <h3 style="color: #38bdf8; margin-top:0;">Panel Rahasia (Rigged)</h3>
+            <label>Pemenang ke-1:</label>
+            <select id="rig1">
+                <option value="">-- Acak Normal --</option>
+            </select>
+
+            <label>Pemenang ke-2:</label>
+            <select id="rig2">
+                <option value="">-- Acak Normal --</option>
+            </select>
+
+            <button onclick="saveRigSettings()" style="background: #10b981; color:white; margin-top: 8px; padding: 10px; border-radius: 8px; border:none; font-weight:bold; cursor:pointer; box-shadow: 0 4px 12px rgba(16,185,129,0.4);">Simpan</button>
+            <button onclick="closeRigModal()" style="background: #ef4444; color:white; padding: 10px; border-radius: 8px; border:none; font-weight:bold; cursor:pointer; box-shadow: 0 4px 12px rgba(239,68,68,0.4);">Tutup</button>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

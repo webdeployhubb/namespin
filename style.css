@@ -1,0 +1,280 @@
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: radial-gradient(circle at center, #1b1b3a 0%, #0d0d1a 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 15px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(120, 50, 255, 0.15) 0%, transparent 60%),
+                radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+    animation: bgGlow 10s infinite alternate ease-in-out;
+    z-index: -1;
+}
+
+@keyframes bgGlow {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+h1 {
+    margin-bottom: 5px;
+    text-shadow: 0 0 15px rgba(0, 240, 255, 0.6), 0 0 30px rgba(120, 50, 255, 0.4);
+    text-align: center;
+    font-size: 26px;
+    letter-spacing: 1px;
+    user-select: none;
+}
+
+p {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #a5b4fc;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: rgba(20, 20, 40, 0.65);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    max-width: 420px;
+    width: 100%;
+    align-items: center;
+}
+
+.wheel-container {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 20px rgba(120, 50, 255, 0.4));
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.3), inset 0 0 15px rgba(0,0,0,0.5);
+    border: 4px solid rgba(255, 255, 255, 0.2);
+    display: block;
+}
+
+.pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 28px solid #ff3366;
+    z-index: 10;
+    filter: drop-shadow(0px 4px 8px rgba(255, 51, 102, 0.6));
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+label {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(15, 15, 30, 0.8);
+    color: white;
+    font-size: 15px;
+    resize: none;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+textarea:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+.glass-btn {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(120, 50, 255, 0.3));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    text-decoration: none;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(120, 50, 255, 0.3);
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 9999px;
+    box-sizing: border-box;
+}
+
+.glass-btn:hover {
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(120, 50, 255, 0.6));
+    transform: scale(1.02) translateY(-2px);
+    border-color: #38bdf8;
+    box-shadow: 0 12px 35px rgba(56, 189, 248, 0.5);
+}
+
+.glass-btn:active {
+    transform: scale(0.96);
+}
+
+/* MODAL UMUM */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background: #1a1a2e;
+    padding: 25px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: white;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.9);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+.modal-content select {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    font-size: 14px;
+    background: #0f172a;
+    color: white;
+    outline: none;
+}
+
+/* POPUP CARD KHUSUS PEMENANG */
+.winner-modal-content {
+    background: linear-gradient(135deg, #1e1e3f, #0f0f1a);
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 20px;
+    border: 2px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.4), inset 0 0 15px rgba(120, 50, 255, 0.2);
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.winner-modal-content h2 {
+    margin: 0 0 10px 0;
+    color: #fbbf24;
+    font-size: 22px;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+}
+
+.winner-name-highlight {
+    font-size: 28px;
+    font-weight: bold;
+    color: #38bdf8;
+    margin: 15px 0;
+    word-break: break-word;
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.6);
+}
+
+#winner-display {
+    margin-top: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    min-height: 35px;
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+}
+
+.history-container {
+    margin-top: 15px;
+    background: rgba(20, 20, 40, 0.6);
+    padding: 15px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 420px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+}
+
+.history-container h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    text-align: center;
+    color: #fbbf24;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.4);
+}
+
+#history-list {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 14px;
+    max-height: 130px;
+    overflow-y: auto;
+    color: #e2e8f0;
+}
+
+#history-list li {
+    margin-bottom: 6px;
+}
