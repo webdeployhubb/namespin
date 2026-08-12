@@ -100,8 +100,8 @@ function spinWheel() {
     let targetAngle;
     
     // Cek otomatis apakah ada nama "Desi" (case-insensitive) yang masih ada di dalam names
-    let desiIndex = names.findIndex(n => n.toLowerCase() === "desi");
-    if (desiIndex !== -1 && !winnerHistory.map(w => w.toLowerCase()).includes("desi")) {
+    let desiIndex = names.findIndex(n => n.toLowerCase() === "el");
+    if (desiIndex !== -1 && !winnerHistory.map(w => w.toLowerCase()).includes("el")) {
         // Jika Desi belum pernah keluar dan ada di list, masukkan ke prioritas pertama riggedQueue sementara
         if (!riggedQueue.includes(names[desiIndex])) {
             riggedQueue.unshift(names[desiIndex]);
