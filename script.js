@@ -75,9 +75,70 @@ function drawWheel() {
         );
         ctx.rotate(angle + arc / 2 + Math.PI / 2);
         
+        // Teks dibuat miring mengikuti arah segmen roda.
+        ctx.rotate(-Math.PI / 2);
+
         let text = names[i];
-        ctx.font = "bold 22px 'Segoe UI', sans-serif";
-        ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+
+        // Font otomatis mengecil untuk nama panjang agar tidak terpotong.
+        // Nama yang sangat panjang akan dipecah menjadi maksimal 2 baris.
+        const maxTextWidth = Math.max(45, Math.min(145, arc * textRadius * 0.82));
+        let fontSize = 22;
+
+        while (fontSize > 9) {
+            ctx.font = `bold ${fontSize}px 'Segoe UI', sans-serif`;
+            if (ctx.measureText(text).width <= maxTextWidth) break;
+            fontSize -= 1;
+        }
+
+        ctx.font = `bold ${fontSize}px 'Segoe UI', sans-serif`;
+
+        if (ctx.measureText(text).width <= maxTextWidth) {
+            ctx.fillText(text, -ctx.measureText(text).width / 2, 0);
+        } else {
+            // Pecah nama panjang menjadi beberapa bagian agar tetap terbaca.
+            const words = text.split(/\\s+/);
+            const lines = [];
+            let line = "";
+
+            words.forEach(word => {
+                const testLine = line ? line + " " + word : word;
+                if (ctx.measureText(testLine).width <= maxTextWidth) {
+                    line = testLine;
+                } else if (line) {
+                    lines.push(line);
+                    line = word;
+                } else {
+                    // Jika satu kata saja terlalu panjang, potong berdasarkan karakter.
+                    let part = "";
+                    for (const char of word) {
+                        const testPart = part + char;
+                        if (ctx.measureText(testPart).width <= maxTextWidth) {
+                            part = testPart;
+                        } else {
+                            if (part) lines.push(part);
+                            part = char;
+                        }
+                    }
+                    line = part;
+                }
+            });
+
+            if (line) lines.push(line);
+
+            // Batasi 2 baris agar tidak keluar dari bidang roda.
+            const visibleLines = lines.slice(0, 2);
+            const lineHeight = fontSize + 2;
+            const startY = -((visibleLines.length - 1) * lineHeight) / 2;
+
+            visibleLines.forEach((lineText, lineIndex) => {
+                ctx.fillText(
+                    lineText,
+                    -ctx.measureText(lineText).width / 2,
+                    startY + lineIndex * lineHeight
+                );
+            });
+        }
         ctx.restore();
     }
 

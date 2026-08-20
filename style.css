@@ -278,3 +278,32 @@ textarea:focus {
 #history-list li {
     margin-bottom: 6px;
 }
+
+/* Dukungan nama panjang */
+.winner-name-highlight {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    line-height: 1.15;
+    padding: 0 6px;
+}
+
+#winner-display {
+    width: 100%;
+    max-width: 420px;
+    padding: 0 12px;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+}
+
+@media (max-width: 480px) {
+    .winner-name-highlight {
+        font-size: clamp(20px, 7vw, 28px);
+    }
+
+    #winner-display {
+        font-size: clamp(17px, 5.5vw, 22px);
+    }
+}
+
+
+/* Orientasi nama pada roda mengikuti arah segmen */
